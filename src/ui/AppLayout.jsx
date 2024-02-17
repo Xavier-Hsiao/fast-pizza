@@ -2,6 +2,7 @@ import Header from "./Header";
 import CartOverview from "../features/cart/CartOverview";
 import { Outlet, useNavigation } from "react-router-dom";
 import Loader from "./Loader";
+import SearchOrder from "../features/order/SearchOrder";
 
 export default function AppLayout() {
   const navigation = useNavigation();
@@ -10,6 +11,7 @@ export default function AppLayout() {
   return (
     <div className="layout">
       <Header />
+      <SearchOrder />
 
       <main>{isLoading ? <Loader /> : <Outlet />}</main>
 
