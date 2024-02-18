@@ -1,4 +1,5 @@
 import { useState } from "react";
+import Button from "../../ui/Button";
 
 function handleSubmit(event) {
   event.preventDefault();
@@ -17,11 +18,11 @@ export default function CreateUser() {
         placeholder="Your full name"
         value={userName}
         onChange={(event) => setUsername(event.target.value)}
-        className="w-72"
+        className="input mb-8 w-72"
       />
       {userName !== "" && (
         <div>
-          <button>Start ordering!</button>
+          <Button>Start ordering!</Button>
         </div>
       )}
     </form>
