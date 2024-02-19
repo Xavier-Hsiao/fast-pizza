@@ -11,7 +11,7 @@ export default function Menu() {
   const menu = useLoaderData();
 
   return (
-    <ul>
+    <ul className="divide-stone-2 divide-y px-2">
       {menu.map((pizza) => (
         <MenuItem pizza={pizza} key={pizza.id} />
       ))}
