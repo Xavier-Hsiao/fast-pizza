@@ -17,8 +17,16 @@ export default function Button({ children, disabled, to, type, callback }) {
       </Link>
     );
 
+  if (callback) {
+    return (
+      <button disabled={disabled} className={styles[type]} onClick={callback}>
+        {children}
+      </button>
+    );
+  }
+
   return (
-    <button disabled={disabled} className={styles[type]} onClick={callback}>
+    <button disabled={disabled} className={styles[type]}>
       {children}
     </button>
   );
