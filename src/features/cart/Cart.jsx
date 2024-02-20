@@ -3,6 +3,7 @@ import Button from "../../ui/Button";
 import CartItem from "./CartItem";
 import { useDispatch, useSelector } from "react-redux";
 import { clearCart, getCart } from "./cartSlice";
+import EmptyCart from "./EmptyCart";
 
 // const fakeCart = [
 //   {
@@ -32,6 +33,8 @@ export default function Cart() {
   const name = useSelector((store) => store.user.userName);
   const cart = useSelector(getCart);
   const dispatch = useDispatch();
+
+  if (!cart.length) return <EmptyCart />;
 
   return (
     <div className="px-4 py-3">
