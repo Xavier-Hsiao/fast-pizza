@@ -60,4 +60,11 @@ export const getTotalCartQuantity = (store) =>
 export const getTotalCartPrice = (store) =>
   store.cart.cart.reduce((sum, item) => sum + item.totalPrice, 0);
 
+// To check if a certain kind of pizza exists in cart
+export function getCurrentQuantityById(id) {
+  return function (store) {
+    return store.cart.cart.find(item => item.pizzaId === id)?.quantity ?? 0;
+  }
+}
+
 export default cartSlice.reducer;
