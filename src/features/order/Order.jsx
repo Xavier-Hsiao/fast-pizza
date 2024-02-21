@@ -8,6 +8,8 @@ import {
   formatDate,
 } from "../../utils/helper";
 import OrderItem from "./OrderItem";
+import store from "../../../store/store";
+import { clearCart } from "../cart/cartSlice";
 
 export default function Order() {
   const order = useLoaderData();
@@ -51,7 +53,7 @@ export default function Order() {
 
       <ul className="divide-y divide-stone-200 border-b border-t">
         {cart.map((item) => (
-          <OrderItem item={item} key={item.id} />
+          <OrderItem item={item} key={item.pizzaId} />
         ))}
       </ul>
 
@@ -75,5 +77,8 @@ export default function Order() {
 export async function loader({ params }) {
   // Note that the `:orderId` in the path is parsed and provided as `params.orderId` by the same name
   const order = await getOrder(params.orderId);
+
+  store.dispatch(clearCart());
+
   return order;
 }
