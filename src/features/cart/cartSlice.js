@@ -37,6 +37,9 @@ const cartSlice = createSlice({
 
       item.quantity--;
       item.totalPrice = item.quantity * item.unitPrice;
+
+      // Delete cart item if the quantity goes to zero
+      if (item.quantity === 0) cartSlice.caseReducers.deleteItem(state, action);
     },
     clearCart(state) {
       state.cart = [];
@@ -63,8 +66,8 @@ export const getTotalCartPrice = (store) =>
 // To check if a certain kind of pizza exists in cart
 export function getCurrentQuantityById(id) {
   return function (store) {
-    return store.cart.cart.find(item => item.pizzaId === id)?.quantity ?? 0;
-  }
+    return store.cart.cart.find((item) => item.pizzaId === id)?.quantity ?? 0;
+  };
 }
 
 export default cartSlice.reducer;
