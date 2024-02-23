@@ -3,8 +3,7 @@ import { createOrder } from "../../services/apiRestaurant";
 import Button from "../../ui/Button";
 import EmptyCart from "../cart/EmptyCart";
 import { useSelector } from "react-redux";
-import { clearCart, getCart, getTotalCartPrice } from "../cart/cartSlice";
-import store from "../../../store/store";
+import { getCart, getTotalCartPrice } from "../cart/cartSlice";
 import { formatCurrency } from "../../utils/helper";
 import { useState } from "react";
 
@@ -102,6 +101,7 @@ export async function action({ request }) {
   const data = Object.fromEntries(formData);
   const order = {
     ...data,
+    // The values within this object are still strings so we use JSON.parse
     cart: JSON.parse(data.cart),
     priority: data.priority === "true",
   };
