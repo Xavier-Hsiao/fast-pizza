@@ -1,6 +1,6 @@
 // Test ID: IIDSAT
 
-import { useLoaderData } from "react-router-dom";
+import { useFetcher, useLoaderData } from "react-router-dom";
 import { getOrder } from "../../services/apiRestaurant";
 import {
   calcMinutesLeft,
@@ -10,9 +10,13 @@ import {
 import OrderItem from "./OrderItem";
 import store from "../../../store/store";
 import { clearCart } from "../cart/cartSlice";
+import { useEffect } from "react";
 
 export default function Order() {
   const order = useLoaderData();
+  // To get ingredients which included in menu data
+  // We want to get menu data without navigation
+  const fetcher = useFetcher();
   const {
     id,
     status,
@@ -23,6 +27,15 @@ export default function Order() {
     cart,
   } = order;
   const deliveryIn = calcMinutesLeft(estimatedDelivery);
+
+  // Handle side effect: fetcher
+  useEffect(() => {
+    if (!fetcher.data && fetcher.state === "idle") {
+      fetcher.load("/menu");
+    }
+  }, [fetcher]);
+
+  console.log(fetcher.data);
 
   return (
     <div className="space-y-8 px-4 py-6">
@@ -53,7 +66,16 @@ export default function Order() {
 
       <ul className="divide-y divide-stone-200 border-b border-t">
         {cart.map((item) => (
-          <OrderItem item={item} key={item.pizzaId} />
+          <OrderItem
+            item={item}
+            key={item.pizzaId}
+            isLoadingIngredients={fetcher.state === "loading"}
+            // It should be an array
+            ingredients={
+              fetcher.data?.find((pizza) => pizza.id === item.pizzaId)
+                .ingredients ?? []
+            }
+          />
         ))}
       </ul>
 
