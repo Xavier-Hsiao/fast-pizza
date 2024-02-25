@@ -35,3 +35,20 @@ export async function createOrder(newOrder) {
     throw Error("Failed creating your order");
   }
 }
+
+export async function updateOrder(id, updatedObj) {
+  try {
+    const res = await fetch(`${API_URL}/order/${id}`, {
+      method: "PATCH",
+      body: JSON.stringify(updatedObj),
+      headers: {
+        "CONTENT-TYPE": "application/json",
+      },
+    });
+
+    // We don't have to return any data
+    if (!res.ok) throw new Error();
+  } catch (err) {
+    throw Error("Failed updating your order");
+  }
+}

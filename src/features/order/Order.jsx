@@ -11,6 +11,7 @@ import OrderItem from "./OrderItem";
 import store from "../../../store/store";
 import { clearCart } from "../cart/cartSlice";
 import { useEffect } from "react";
+import UpdateOrder from "./UpdateOrder";
 
 export default function Order() {
   const order = useLoaderData();
@@ -34,8 +35,6 @@ export default function Order() {
       fetcher.load("/menu");
     }
   }, [fetcher]);
-
-  console.log(fetcher.data);
 
   return (
     <div className="space-y-8 px-4 py-6">
@@ -92,6 +91,7 @@ export default function Order() {
           To pay on delivery: {formatCurrency(orderPrice + priorityPrice)}
         </p>
       </div>
+      {!priority && <UpdateOrder />}
     </div>
   );
 }
